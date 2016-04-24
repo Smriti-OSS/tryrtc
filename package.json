@@ -1,0 +1,27 @@
+{
+  "name": "codelab",
+  "version": "0.0.1",
+  "description": "WebRTC",
+  "main": "index.js",
+  "scripts": {
+  "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smriti-thakur/tryrtc.git"
+  },
+  "keywords": [
+    "webrtc",
+    "checkitout"
+  ],
+  "author": "webrtc",
+  "license": "NIT",
+  "dependencies": {
+    "node-static": "~0.7.1",
+    "socket.io": "~0.9.6",
+    "express": "~3.4.0"
+  }
+   "engines": {
+    "node": "0.10.x"
+  }
+}
