@@ -8,8 +8,8 @@ var pc;
 var remoteStream;
 var turnReady;
 
-//var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
-var pc_config = {'iceServers': [{'url':'stun:stun.services.mozilla.com'}]};
+var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
+//var pc_config = {'iceServers': [{'url':'stun:stun.services.mozilla.com'}]};
 var pc_constraints = {'optional': [{'DtlsSrtpKeyAgreement': true}]};
 
 // Set up audio and video regardless of what devices are present.
@@ -116,7 +116,7 @@ getUserMedia(constraints, handleUserMedia, handleUserMediaError);
 console.log('Getting user media with constraints', constraints);
 
 if (location.hostname != "localhost") {
-	alert(location.hostname);
+	//alert(location.hostname);
   requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
 }
 
