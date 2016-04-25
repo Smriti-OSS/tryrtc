@@ -7,7 +7,9 @@ var localStream;
 var pc;
 var remoteStream;
 var turnReady;
-var pc_config = {'iceServers': [{'url': 'stun:stun.stunprotocol.org:3478'}]};
+var pc_config = {'iceServers': [{url: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' }]};
+
+//var pc_config = {'iceServers': [{'url': 'stun:stun.stunprotocol.org:3478'}]};
 //var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
 //var pc_config = {'iceServers': [{'url':'stun:stun.services.mozilla.com'}]};
 var pc_constraints = {'optional': [{'DtlsSrtpKeyAgreement': true}]};
