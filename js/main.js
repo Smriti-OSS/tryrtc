@@ -117,7 +117,13 @@ console.log('Getting user media with constraints', constraints);
 
 if (location.hostname != "localhost") {
 	//alert(location.hostname);
-  requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
+	pc_config.iceServers.push({
+		  url:'turn:numb.viagenie.ca',credential:'muazkh',username:'webrtc@live.com'
+		  
+  });
+  turnExists = true;
+      turnReady = true;
+ // requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
 }
 
 function maybeStart() {
@@ -200,7 +206,7 @@ function handleCreateAnswerError(error) {
 
 
 
-function requestTurn(turn_url) {
+/*function requestTurn(turn_url) {
   var turnExists = false;
   for (var i in pc_config.iceServers) {
     if (pc_config.iceServers[i].url.substr(0, 5) === 'turn:') {
@@ -215,7 +221,7 @@ function requestTurn(turn_url) {
 		  
   });
     turnReady = true;
-  /*if (!turnExists) {
+  if (!turnExists) {
     console.log('Getting TURN server from ', turn_url);
     // No TURN server. Get one from computeengineondemand.appspot.com:
     var xhr = new XMLHttpRequest();
