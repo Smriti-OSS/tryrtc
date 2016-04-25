@@ -8,8 +8,8 @@ var pc;
 var remoteStream;
 var turnReady;
 
-var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
-
+//var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
+var pc_config = {'iceServers': [{'url':'stun:stun.services.mozilla.com'}]};
 var pc_constraints = {'optional': [{'DtlsSrtpKeyAgreement': true}]};
 
 // Set up audio and video regardless of what devices are present.
@@ -21,8 +21,8 @@ var sdpConstraints = {'mandatory': {
 
 var room = location.pathname.substring(1);
 if (room === '') {
-//  room = prompt('Enter room name:');
-  room = 'foo';
+  room = prompt('Enter room name:');
+ // room = 'foo';
 } else {
   //
 }
@@ -116,6 +116,7 @@ getUserMedia(constraints, handleUserMedia, handleUserMediaError);
 console.log('Getting user media with constraints', constraints);
 
 if (location.hostname != "localhost") {
+	alert(location.hostname);
   requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
 }
 
@@ -178,19 +179,26 @@ function doCall() {
   console.log('Sending offer to peer');
   pc.createOffer(setLocalAndSendMessage, handleCreateOfferError);
 }
-
 function doAnswer() {
   console.log('Sending answer to peer.');
-  pc.createAnswer(setLocalAndSendMessage, null, sdpConstraints);
+
+  pc.createAnswer(setLocalAndSendMessage, handleCreateAnswerError, sdpConstraints);
 }
 
 function setLocalAndSendMessage(sessionDescription) {
-  // Set Opus as the preferred codec in SDP if Opus is present.
   sessionDescription.sdp = preferOpus(sessionDescription.sdp);
   pc.setLocalDescription(sessionDescription);
+
   console.log('setLocalAndSendMessage sending message' , sessionDescription);
+
   sendMessage(sessionDescription);
 }
+
+function handleCreateAnswerError(error) {
+  console.log('createAnswer() error: ', e);
+}
+
+
 
 function requestTurn(turn_url) {
   var turnExists = false;
@@ -255,8 +263,11 @@ function stop() {
 
 // Set Opus as the default audio codec if it's present.
 function preferOpus(sdp) {
-  var sdpLines = sdp.split('\r\n');
-  var mLineIndex;
+	var mLineIndex = null;
+    var sdpLines = null; 
+	sdpLines=sdp.split('\r\n');
+	//alert(sdpLines);
+  //var mLineIndex;
   // Search for m line.
   for (var i = 0; i < sdpLines.length; i++) {
       if (sdpLines[i].search('m=audio') !== -1) {
