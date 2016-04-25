@@ -7,7 +7,7 @@ var localStream;
 var pc;
 var remoteStream;
 var turnReady;
-var pc_config= {'iceServers': [{'url': 'stun:stun.stunprotocol.org:3478'}]};
+var pc_config= {'iceServers': [{'url': 'stun:stun.stunprotocol.org:3478'},{url:'turn:numb.viagenie.ca',credential:'muazkh',username:'webrtc@live.com'}]};
 //var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
 //var pc_config = {'iceServers': [{'url':'stun:stun.services.mozilla.com'}]};
 var pc_constraints = {'optional': [{'DtlsSrtpKeyAgreement': true}]};
@@ -209,7 +209,13 @@ function requestTurn(turn_url) {
       break;
     }
   }
-  if (!turnExists) {
+  if(!turnExists){
+	  pc_config.iceServers.push({
+		  url:'turn:numb.viagenie.ca',credential:'muazkh',username:'webrtc@live.com'
+		  
+  });
+    turnReady = true;
+  /*if (!turnExists) {
     console.log('Getting TURN server from ', turn_url);
     // No TURN server. Get one from computeengineondemand.appspot.com:
     var xhr = new XMLHttpRequest();
@@ -218,16 +224,19 @@ function requestTurn(turn_url) {
         var turnServer = JSON.parse(xhr.responseText);
       	console.log('Got TURN server: ', turnServer);
         pc_config.iceServers.push({
-          'url': 'turn:' + turnServer.username + '@' + turnServer.turn,
-          'credential': turnServer.password
+			credential:'muazkh',username:'webrtc@live.com'
+			 'url': 'turn:' + turnServer.username + '@' + turnServer.turn,
+             'credential': turnServer.password
+         // 'url': 'turn:' + turnServer.username + '@' + turnServer.turn,
+         // 'credential': turnServer.password
         });
         turnReady = true;
       }
     };
     xhr.open('GET', turn_url, true);
     xhr.send();
-  }
-}
+  }*/
+} 
 
 function handleRemoteStreamAdded(event) {
   console.log('Remote stream added.');
