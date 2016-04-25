@@ -7,7 +7,7 @@ var file = new(static.Server)();
 //}).listen(8080);
 var app = http.createServer(function (req, res) {
   file.serve(req, res);
-}).listen(3000);
+}).listen(process.env.PORT||5000);
 var io = require('socket.io').listen(app);
 io.sockets.on('connection', function (socket){
 
